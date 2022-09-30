@@ -1,5 +1,7 @@
 package com.yujiangjun.handler;
 
+import cn.hutool.core.text.CharSequenceUtil;
+import com.yujiangjun.util.JwtUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFuture;
@@ -8,11 +10,14 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.*;
 import io.netty.handler.codec.http.websocketx.*;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
+import static com.yujiangjun.constants.Constant.JWT_PASSWORD;
+import static com.yujiangjun.constants.Constant.TOKEN;
 import static io.netty.handler.codec.http.HttpUtil.isKeepAlive;
 
 @Slf4j
@@ -25,7 +30,7 @@ public class NioWebSocketHandler extends SimpleChannelInboundHandler<Object> {
           log.debug("收到消息:{}",msg);
       }
       if (msg instanceof FullHttpRequest){
-
+          handleHttpRequest(ctx,(FullHttpRequest) msg);
       }else if (msg instanceof WebSocketFrame){
           handlerWebSocketFrame(ctx, (WebSocketFrame) msg);
       }
@@ -33,15 +38,14 @@ public class NioWebSocketHandler extends SimpleChannelInboundHandler<Object> {
     }
 
     @Override
-    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+    public void channelActive(@NonNull ChannelHandlerContext ctx) throws Exception {
         if (log.isDebugEnabled()){
             log.debug("客户端连接:{}",ctx.channel());
         }
-        ChannelSupervise.addChannel(ctx.channel());
     }
 
     @Override
-    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+    public void channelInactive(@NonNull ChannelHandlerContext ctx) throws Exception {
         if (log.isDebugEnabled()){
             log.debug("客户端断开连接");
         }
@@ -82,6 +86,17 @@ public class NioWebSocketHandler extends SimpleChannelInboundHandler<Object> {
             sendHttpResponse(ctx,req,new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.BAD_REQUEST));
             return;
         }
+
+        String token = req.headers().get(TOKEN);
+        if (CharSequenceUtil.isEmpty(token)){
+            if (log.isDebugEnabled()){
+                log.debug("token为空,当前未登录");
+            }
+            sendHttpResponse(ctx,req,new DefaultFullHttpResponse(HttpVersion.HTTP_1_1,HttpResponseStatus.BAD_REQUEST));
+        }
+        String userId = JwtUtil.verify(token, JWT_PASSWORD);
+        ChannelSupervise.addChannel(userId,ctx.channel());
+
         WebSocketServerHandshakerFactory wsFactory = new WebSocketServerHandshakerFactory("ws://localhost:8081/websocket", null, false);
         handShaker = wsFactory.newHandshaker(req);
         if (handShaker==null){

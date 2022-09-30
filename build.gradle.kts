@@ -24,6 +24,8 @@ configurations.all{
 dependencies {
 
     implementation("cn.hutool:hutool-all:5.8.8")
+    implementation("com.auth0:java-jwt:3.8.3")
+    implementation("cn.hutool:hutool-all:5.8.8")
     implementation("com.lmax:disruptor:3.4.4")
     implementation("org.springframework.boot:spring-boot-starter-log4j2")
     implementation("org.springframework.boot:spring-boot-starter"){
@@ -31,6 +33,7 @@ dependencies {
     }
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
     annotationProcessor("org.projectlombok:lombok")
+    compileOnly ("org.projectlombok:lombok")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
@@ -39,4 +42,12 @@ dependencies {
 
 tasks.getByName<Test>("test") {
     useJUnitPlatform()
+}
+
+tasks.withType(JavaCompile::class.java) {
+    options.encoding = "utf-8"
+}
+
+tasks.withType(Javadoc::class.java) {
+    options.encoding = "utf-8"
 }
