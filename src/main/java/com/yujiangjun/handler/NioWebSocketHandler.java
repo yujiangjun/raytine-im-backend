@@ -1,6 +1,9 @@
 package com.yujiangjun.handler;
 
 import cn.hutool.core.text.CharSequenceUtil;
+import cn.hutool.json.JSONUtil;
+import com.yujiangjun.constants.CoreEnum;
+import com.yujiangjun.message.TextMessage;
 import com.yujiangjun.util.JwtUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -14,7 +17,6 @@ import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Date;
 
 import static com.yujiangjun.constants.Constant.JWT_PASSWORD;
 import static com.yujiangjun.constants.Constant.TOKEN;
@@ -76,8 +78,10 @@ public class NioWebSocketHandler extends SimpleChannelInboundHandler<Object> {
         if (log.isDebugEnabled()){
             log.debug("收到消息:{}",request);
         }
-        TextWebSocketFrame response = new TextWebSocketFrame(new Date().toString() + ctx.channel().id() + ":" + request);
-        ChannelSupervise.send2All(response);
+        TextMessage message = JSONUtil.toBean(request, TextMessage.class);
+        MessageHandlerFactory.getMessageHandler(CoreEnum.MessageType.of(message.getType())).doHandle(ctx,frame);
+//        TextWebSocketFrame response = new TextWebSocketFrame(new Date().toString() + ctx.channel().id() + ":" + request);
+//        ChannelSupervise.send2All(response);
     }
 
     private void handleHttpRequest(ChannelHandlerContext ctx,FullHttpRequest req){

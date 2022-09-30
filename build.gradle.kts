@@ -23,6 +23,9 @@ configurations.all{
 }
 dependencies {
 
+    implementation("com.fasterxml.jackson.core:jackson-databind")
+    implementation("com.fasterxml.jackson.core:jackson-core")
+    implementation("com.fasterxml.jackson.core:jackson-annotations")
     implementation("cn.hutool:hutool-all:5.8.8")
     implementation("com.auth0:java-jwt:3.8.3")
     implementation("cn.hutool:hutool-all:5.8.8")
