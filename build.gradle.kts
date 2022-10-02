@@ -23,6 +23,7 @@ configurations.all{
 }
 dependencies {
 
+    implementation("org.apache.hbase:hbase-client:1.3.6")
     implementation("com.fasterxml.jackson.core:jackson-databind")
     implementation("com.fasterxml.jackson.core:jackson-core")
     implementation("com.fasterxml.jackson.core:jackson-annotations")
