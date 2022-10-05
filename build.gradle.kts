@@ -23,7 +23,10 @@ configurations.all{
 }
 dependencies {
 
-    implementation("org.apache.hbase:hbase-client:1.3.6")
+    implementation("org.apache.hbase:hbase-client:1.3.6"){
+        exclude("org.slf4j","slf4j-api")
+        exclude("org.slf4j","slf4j-log4j12")
+    }
     implementation("com.fasterxml.jackson.core:jackson-databind")
     implementation("com.fasterxml.jackson.core:jackson-core")
     implementation("com.fasterxml.jackson.core:jackson-annotations")
@@ -36,6 +39,7 @@ dependencies {
         exclude("org.springframework.boot","spring-boot-starter-tomcat")
     }
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
+    implementation("com.squareup.okhttp3:okhttp:4.10.0")
     annotationProcessor("org.projectlombok:lombok")
     compileOnly ("org.projectlombok:lombok")
     testImplementation("org.springframework.boot:spring-boot-starter-test")

@@ -1,8 +1,9 @@
 package com.yujiangjun.handler;
 
 import cn.hutool.json.JSONUtil;
-import com.yujiangjun.channel.WebSocketChannel;
 import com.yujiangjun.message.TextMessage;
+import com.yujiangjun.util.DistributedIDUtil;
+import com.yujiangjun.util.JsonUtil;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
@@ -18,12 +19,18 @@ public class TextMessageHandler implements MessageHandler{
         TextMessage message = JSONUtil.toBean(req, TextMessage.class);
         String targetId = message.getTargetId();
         Channel channel = ChannelSupervise.getChannelByUserId(targetId);
-        frame.retain(2);
-        channel.writeAndFlush(frame);
+
+        message.setMsgId(DistributedIDUtil.getId());
+        TextWebSocketFrame resp = new TextWebSocketFrame(JsonUtil.writeObject(message));
+
+        resp.retain(2);
+        resp.content().markReaderIndex();
+        ctx.writeAndFlush(resp);
+        resp.content().resetReaderIndex();
         if (log.isDebugEnabled()){
             log.debug("send channel id:{}",ctx.channel().id());
             log.debug("receive channel id:{}",channel.id());
         }
-        ctx.writeAndFlush(frame);
+        channel.writeAndFlush(resp);
     }
 }
