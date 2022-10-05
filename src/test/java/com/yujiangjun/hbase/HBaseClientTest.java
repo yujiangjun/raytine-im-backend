@@ -1,5 +1,8 @@
 package com.yujiangjun.hbase;
 
+import cn.hutool.core.util.CharUtil;
+import cn.hutool.core.util.CharsetUtil;
+import cn.hutool.core.util.StrUtil;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.HColumnDescriptor;
@@ -77,6 +80,18 @@ public class HBaseClientTest {
         System.out.println("Data insert success");
     }
 
+    public static void insertData1(TableName tableName,Student student) throws IOException {
+        Put put = new Put(Bytes.toBytes(student.getId()));
+        put.addColumn(Bytes.toBytes("name"),Bytes.toBytes("id"),Bytes.toBytes(student.getId()));
+        initHBase().getTable(tableName).put(put);
+        System.out.println("Data insert success");
+    }
+
+    @Test
+    void insertData1Test() throws IOException {
+        Student student = new Student("1","yujiangjun","20");
+        insertData1(getTbName("stu"),student);
+    }
     public static ResultScanner getScanner(TableName tableName) throws IOException {
         Table table = initHBase().getTable(tableName);
         Scan scan = new Scan();
@@ -85,14 +100,26 @@ public class HBaseClientTest {
     @Test
     void scannerTest() throws IOException {
         ResultScanner stu = getScanner(getTbName("stu"));
-        stu.forEach(result -> System.out.println(Bytes.toString(result.getRow()) + "->" + Bytes
-                .toString(result.getValue(Bytes.toBytes("name"), Bytes.toBytes("name")))));
+        stu.forEach(result -> {
+            System.out.println( StrUtil.str(result.getRow(),CharsetUtil.UTF_8)+":");
+            System.out.println(Bytes.toString(result.getValue(Bytes.toBytes("name"),Bytes.toBytes("name"))));
+            System.out.println(Bytes.toString(result.getRow()) +":");
+            System.out.println(Bytes.toString(result.getValue(Bytes.toBytes("age"),Bytes.toBytes("age"))));
+            System.out.println(Bytes.toString(result.getRow()) +":");
+            System.out.println(Bytes.toString(result.getValue(Bytes.toBytes("name"),Bytes.toBytes("id"))));
+//            System.out.println(Bytes.toString(result.getRow()) + "->" + Bytes
+//                .toString(result.getValue(Bytes.toBytes("name"), Bytes.toBytes("name"))));
+//            System.out.println(Bytes.toString(result.getRow()) + "->" + Bytes
+//                    .toString(result.getValue(Bytes.toBytes("age"), Bytes.toBytes("age"))));
+//            System.out.println(Bytes.toString(result.getRow()) + "->" + Bytes
+//                    .toString(result.getValue(Bytes.toBytes("name"), Bytes.toBytes("id"))));
+        });
         stu.close();
     }
     @Test
     void insertDataTest() throws IOException {
-        Student s1 = new Student(1, "张三", 20);
-        Student s2 = new Student(2, "李四", 21);
+        Student s1 = new Student("1", "张三", "20");
+        Student s2 = new Student("2", "李四", "21");
         insertData(getTbName("stu"),s1);
         insertData(getTbName("stu"),s2);
     }
@@ -100,5 +127,10 @@ public class HBaseClientTest {
     public static void deleteData(TableName tableName,String rowKey) throws IOException {
         Delete delete = new Delete(Bytes.toBytes(rowKey));
         initHBase().getTable(tableName).delete(delete);
+    }
+
+    @Test
+    void deleteDataTest() throws IOException {
+        deleteData(getTbName("stu"),"1");
     }
 }

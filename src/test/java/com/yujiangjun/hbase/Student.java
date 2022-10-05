@@ -1,21 +1,21 @@
 package com.yujiangjun.hbase;
 
 public class Student {
-    private Integer id;
+    private String id;
     private String name;
-    private Integer age;
+    private String age;
 
-    public Student(Integer id, String name, Integer age) {
+    public Student(String id, String name, String age) {
         this.id = id;
         this.name = name;
         this.age = age;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -27,11 +27,11 @@ public class Student {
         this.name = name;
     }
 
-    public Integer getAge() {
+    public String getAge() {
         return age;
     }
 
-    public void setAge(Integer age) {
+    public void setAge(String age) {
         this.age = age;
     }
 }
