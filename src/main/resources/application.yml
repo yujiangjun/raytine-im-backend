@@ -2,3 +2,8 @@ logging:
   config: classpath:log4j2.xml
 netty:
   port: 9000
+hbase:
+  zookeeper:
+    quorum: hbase
+    property:
+      clientPort: 2181

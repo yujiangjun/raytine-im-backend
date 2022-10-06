@@ -3,6 +3,7 @@ package com.yujiangjun.handler;
 import cn.hutool.json.JSONUtil;
 import com.yujiangjun.message.TextMessage;
 import com.yujiangjun.util.DistributedIDUtil;
+import com.yujiangjun.util.HisMessageUtil;
 import com.yujiangjun.util.JsonUtil;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
@@ -32,5 +33,6 @@ public class TextMessageHandler implements MessageHandler{
             log.debug("receive channel id:{}",channel.id());
         }
         channel.writeAndFlush(resp);
+        HisMessageUtil.saveMessage(message);
     }
 }
