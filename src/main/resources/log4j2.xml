@@ -4,7 +4,7 @@
 <!--monitorInterval="30"  :间隔秒数,自动检测配置文件的变更和重新配置本身-->
 <configuration status="WARN" monitorInterval="30">
     <Properties>
-        <Property name="app">im-backend</Property>
+        <Property name="app">/opt/im-backend</Property>
         <!--自定义一些常量，之后使用${变量名}引用-->
         <Property name="logFilePath">log</Property>
         <Property name="logFileName">log.log</Property>
