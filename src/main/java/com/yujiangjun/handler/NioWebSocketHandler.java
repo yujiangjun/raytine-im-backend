@@ -27,7 +27,7 @@ public class NioWebSocketHandler extends SimpleChannelInboundHandler<Object> {
 
     private WebSocketServerHandshaker handShaker;
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
+    protected void channelRead0(ChannelHandlerContext ctx, Object msg) {
       if (log.isDebugEnabled()){
           log.debug("收到消息:{}",msg);
       }
@@ -40,14 +40,14 @@ public class NioWebSocketHandler extends SimpleChannelInboundHandler<Object> {
     }
 
     @Override
-    public void channelActive(@NonNull ChannelHandlerContext ctx) throws Exception {
+    public void channelActive(@NonNull ChannelHandlerContext ctx) {
         if (log.isDebugEnabled()){
             log.debug("客户端连接:{}",ctx.channel());
         }
     }
 
     @Override
-    public void channelInactive(@NonNull ChannelHandlerContext ctx) throws Exception {
+    public void channelInactive(@NonNull ChannelHandlerContext ctx) {
         if (log.isDebugEnabled()){
             log.debug("客户端断开连接");
         }
@@ -55,7 +55,7 @@ public class NioWebSocketHandler extends SimpleChannelInboundHandler<Object> {
     }
 
     @Override
-    public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
+    public void channelReadComplete(ChannelHandlerContext ctx) {
         ctx.flush();
     }
 
@@ -80,8 +80,6 @@ public class NioWebSocketHandler extends SimpleChannelInboundHandler<Object> {
         }
         TextMessage message = JSONUtil.toBean(request, TextMessage.class);
         MessageHandlerFactory.getMessageHandler(CoreEnum.MessageType.of(message.getType())).doHandle(ctx,frame);
-//        TextWebSocketFrame response = new TextWebSocketFrame(new Date().toString() + ctx.channel().id() + ":" + request);
-//        ChannelSupervise.send2All(response);
     }
 
     private void handleHttpRequest(ChannelHandlerContext ctx,FullHttpRequest req){

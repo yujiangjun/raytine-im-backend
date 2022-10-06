@@ -2,14 +2,18 @@ package com.yujiangjun.handler;
 
 import cn.hutool.core.util.StrUtil;
 import com.yujiangjun.channel.WebSocketChannel;
+import com.yujiangjun.util.SpringContextUtil;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelId;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.util.concurrent.GlobalEventExecutor;
+import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import static com.yujiangjun.constants.Constant.ONLINE_CHANNEL;
 
 public class ChannelSupervise {
 
@@ -20,11 +24,15 @@ public class ChannelSupervise {
     public static void addChannel(String userId,Channel channel){
         globalGroup.add(channel);
         channelMap.put(channel.id(),userId);
+        StringRedisTemplate bean = SpringContextUtil.getBean(StringRedisTemplate.class);
+        bean.boundListOps(ONLINE_CHANNEL).leftPush(channel.id().asLongText());
     }
 
     public static void removeChannel(Channel channel){
         globalGroup.remove(channel);
         channelMap.remove(channel.id());
+        StringRedisTemplate bean = SpringContextUtil.getBean(StringRedisTemplate.class);
+        bean.boundListOps(ONLINE_CHANNEL).remove(1,channel.id().asLongText());
     }
 
     public static WebSocketChannel findChannel(Channel channel){
