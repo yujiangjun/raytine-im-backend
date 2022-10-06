@@ -7,3 +7,9 @@ hbase:
     quorum: hbase
     property:
       clientPort: 2181
+spring:
+  redis:
+    host: 8.134.34.84
+    database: 1
+    port: 6379
+    password: 123456
