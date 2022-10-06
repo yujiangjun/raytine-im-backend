@@ -48,9 +48,9 @@ dependencies {
     implementation("io.netty:netty-all:4.1.82.Final")
 }
 
-tasks.getByName<Test>("test") {
-    useJUnitPlatform()
-}
+//tasks.getByName<Test>("test") {
+//    useJUnitPlatform()
+//}
 
 tasks.withType(JavaCompile::class.java) {
     options.encoding = "utf-8"
