@@ -23,7 +23,7 @@ configurations.all{
 }
 dependencies {
 
-    implementation("org.apache.hbase:hbase-client:1.3.6"){
+    implementation("org.apache.hbase:hbase-client:2.5.0"){
         exclude("org.slf4j","slf4j-api")
         exclude("org.slf4j","slf4j-log4j12")
     }
