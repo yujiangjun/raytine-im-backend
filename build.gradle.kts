@@ -23,10 +23,6 @@ configurations.all{
 }
 dependencies {
 
-    implementation("org.apache.hbase:hbase-client:2.5.0"){
-        exclude("org.slf4j","slf4j-api")
-        exclude("org.slf4j","slf4j-log4j12")
-    }
     implementation("com.fasterxml.jackson.core:jackson-databind")
     implementation("com.fasterxml.jackson.core:jackson-core")
     implementation("com.fasterxml.jackson.core:jackson-annotations")
@@ -39,6 +35,7 @@ dependencies {
         exclude("org.springframework.boot","spring-boot-starter-tomcat")
     }
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
+    implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
     annotationProcessor("org.projectlombok:lombok")
     compileOnly ("org.projectlombok:lombok")
@@ -48,9 +45,9 @@ dependencies {
     implementation("io.netty:netty-all:4.1.82.Final")
 }
 
-//tasks.getByName<Test>("test") {
-//    useJUnitPlatform()
-//}
+tasks.getByName<Test>("test") {
+    useJUnitPlatform()
+}
 
 tasks.withType(JavaCompile::class.java) {
     options.encoding = "utf-8"

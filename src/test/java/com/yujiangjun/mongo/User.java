@@ -1,15 +1,12 @@
-package com.yujiangjun.hbase;
+package com.yujiangjun.mongo;
 
-public class Student {
+import java.io.Serializable;
+
+public class User implements Serializable {
+
     private String id;
     private String name;
     private String age;
-
-    public Student(String id, String name, String age) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
-    }
 
     public String getId() {
         return id;

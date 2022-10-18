@@ -3,9 +3,11 @@ package com.yujiangjun.message;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serializable;
+
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class TextMessage extends AbstractMessage{
+public class TextMessage extends AbstractMessage implements Serializable {
     private String content;
     private String sendUserId;
     /**
