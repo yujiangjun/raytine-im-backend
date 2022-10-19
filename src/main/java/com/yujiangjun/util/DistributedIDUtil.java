@@ -9,16 +9,14 @@ public class DistributedIDUtil {
     private DistributedIDUtil(){}
 
     public static String getId(){
-//        Environment environment = SpringContextUtil.getBean(Environment.class);
-//        String[] activeProfiles = environment.getActiveProfiles();
+        Environment environment = SpringContextUtil.getBean(Environment.class);
+        String[] activeProfiles = environment.getActiveProfiles();
         String url;
-//        if (ArrayUtil.isEmpty(activeProfiles)){
-//            url=String.valueOf(new Props("leaf.properties").get("leaf.host"))+Constant.getDistributedIdUrl;
-//        }else {
-//            url = new Props(environment.getActiveProfiles()[0]+"-leaf.properties").get("leaf.host")+Constant.getDistributedIdUrl;
-//        }
-        Props props = new Props("leaf.properties");
-        url = props.get("left.host")+Constant.getDistributedIdUrl;
+        if (ArrayUtil.isEmpty(activeProfiles)){
+            url= new Props("leaf.properties").get("left.host") +Constant.getDistributedIdUrl;
+        }else {
+            url = new Props(String.format("leaf-%s.properties",environment.getActiveProfiles()[0])).get("left.host")+Constant.getDistributedIdUrl;
+        }
         return OKHttpUtil.get(url, String.class);
     }
 }

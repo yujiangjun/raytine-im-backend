@@ -39,7 +39,7 @@ public class TextMessageHandler implements MessageHandler{
         }else {
             ctx.writeAndFlush(resp);
             RedisTemplate<String,TextMessage> redisTemplate = SpringContextUtil.getBean(RedisTemplate.class,"textMessageRedisTemplate");
-            redisTemplate.boundListOps(message.getMsgId()).leftPushAll(message);
+            redisTemplate.boundListOps(message.getTargetId()).leftPushAll(message);
         }
 
 

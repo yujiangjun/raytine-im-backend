@@ -4,11 +4,11 @@ netty:
   port: 9000
 spring:
   redis:
-    host: localhost
+    host: redis
     database: 1
     port: 6379
     password: 123456
   data:
     mongodb:
-      host: localhost
+      host: mongo
       database: im

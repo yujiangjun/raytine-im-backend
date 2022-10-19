@@ -12,3 +12,4 @@ spring:
     mongodb:
       host: localhost
       database: im
+      port: 49154
