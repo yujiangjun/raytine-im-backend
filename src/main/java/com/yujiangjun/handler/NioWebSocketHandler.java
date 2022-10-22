@@ -5,6 +5,7 @@ import cn.hutool.json.JSONUtil;
 import com.yujiangjun.constants.CoreEnum;
 import com.yujiangjun.message.TextMessage;
 import com.yujiangjun.util.JwtUtil;
+import com.yujiangjun.util.UrlUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFuture;
@@ -89,17 +90,19 @@ public class NioWebSocketHandler extends SimpleChannelInboundHandler<Object> {
             return;
         }
 
-        String token = req.headers().get(TOKEN);
-        if (CharSequenceUtil.isEmpty(token)){
-            if (log.isDebugEnabled()){
-                log.debug("token为空,当前未登录");
-            }
-            sendHttpResponse(ctx,req,new DefaultFullHttpResponse(HttpVersion.HTTP_1_1,HttpResponseStatus.BAD_REQUEST));
-        }
-        String userId = JwtUtil.verify(token, JWT_PASSWORD);
+//        String prams =
+//        String token =
+//        if (CharSequenceUtil.isEmpty(token)){
+//            if (log.isDebugEnabled()){
+//                log.debug("token为空,当前未登录");
+//            }
+//            sendHttpResponse(ctx,req,new DefaultFullHttpResponse(HttpVersion.HTTP_1_1,HttpResponseStatus.BAD_REQUEST));
+//        }
+//        String userId = JwtUtil.verify(token, JWT_PASSWORD);
+        String userId = UrlUtil.getParameter(req.uri()).get("userId");
         ChannelSupervise.addChannel(userId,ctx.channel());
 
-        WebSocketServerHandshakerFactory wsFactory = new WebSocketServerHandshakerFactory("ws://localhost:8081/websocket", null, false);
+        WebSocketServerHandshakerFactory wsFactory = new WebSocketServerHandshakerFactory("ws://localhost:9999/websocket", null, false);
         handShaker = wsFactory.newHandshaker(req);
         if (handShaker==null){
             WebSocketServerHandshakerFactory.sendUnsupportedVersionResponse(ctx.channel());

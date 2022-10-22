@@ -14,5 +14,8 @@ public class TextMessage extends AbstractMessage implements Serializable {
      * 当是单聊，表示接收者id，群聊时表示
      */
     private String targetId;
+    private String targetName;
+    private String targetAvatar;
+    private Integer dict;
 
 }
