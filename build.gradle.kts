@@ -31,7 +31,7 @@ dependencies {
     implementation("cn.hutool:hutool-all:5.8.8")
     implementation("com.lmax:disruptor:3.4.4")
     implementation("org.springframework.boot:spring-boot-starter-log4j2")
-    implementation("org.springframework.boot:spring-boot-starter"){
+    implementation("org.springframework.boot:spring-boot-starter-web"){
         exclude("org.springframework.boot","spring-boot-starter-tomcat")
     }
     implementation("org.springframework.boot:spring-boot-starter-data-redis")

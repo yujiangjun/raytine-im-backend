@@ -12,3 +12,8 @@ spring:
     mongodb:
       host: localhost
       database: im
+  main:
+    web-application-type: none
+message:
+  host: message
+  port: 8080
