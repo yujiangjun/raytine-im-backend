@@ -10,6 +10,8 @@ import java.io.Serializable;
 public class TextMessage extends AbstractMessage implements Serializable {
     private String content;
     private String sendUserId;
+    private String sendUserName;
+    private String sendAvatar;
     /**
      * 当是单聊，表示接收者id，群聊时表示
      */

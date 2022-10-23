@@ -13,3 +13,6 @@ spring:
       host: localhost
       database: im
       port: 49154
+redisson:
+  singleServerConfig:
+    address: localhost:6379

@@ -43,6 +43,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
     implementation("io.netty:netty-all:4.1.82.Final")
+    implementation("org.redisson:redisson-spring-boot-starter:3.17.7")
 }
 
 //tasks.getByName<Test>("test") {

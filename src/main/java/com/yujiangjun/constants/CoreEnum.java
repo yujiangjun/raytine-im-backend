@@ -91,4 +91,28 @@ public class CoreEnum {
             return value;
         }
     }
+
+    public enum MessageDict implements BaseEnum{
+        SEND(1,"发送"),
+        RECEIVE(2,"接收"),
+        ;
+
+        MessageDict(int code, String value) {
+            this.code = code;
+            this.value = value;
+        }
+
+        private final int code;
+        private final String value;
+
+        @Override
+        public int getCode() {
+            return code;
+        }
+
+        @Override
+        public String value() {
+            return value;
+        }
+    }
 }

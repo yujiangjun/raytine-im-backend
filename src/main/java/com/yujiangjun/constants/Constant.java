@@ -16,4 +16,6 @@ public interface Constant {
      * 在线channel
      */
     String ONLINE_CHANNEL="activeChannel";
+
+    String unReadMsgCount="unReadMsgCount_";
 }
