@@ -15,9 +15,9 @@ public class MessageSessionService {
     private String messageHost;
     @Value("${message.port}")
     private int messagePort;
-    final String baseUrl="http://"+messageHost+":"+messagePort+"/message/";
 
     public void addOrUpdate(Session session){
+        String baseUrl="http://"+messageHost+":"+messagePort+"/message/";
         String url = baseUrl+ RemoteConstants.ADD_UPDATE;
         RestTemplate restTemplate = SpringContextUtil.getBean(RestTemplate.class);
         restTemplate.postForObject(url,session, Resp.class);

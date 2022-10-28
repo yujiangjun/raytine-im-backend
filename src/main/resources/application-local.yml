@@ -12,7 +12,9 @@ spring:
     mongodb:
       host: localhost
       database: im
-      port: 49154
+message:
+  host: localhost
+  port: 8080
 redisson:
   singleServerConfig:
     address: localhost:6379

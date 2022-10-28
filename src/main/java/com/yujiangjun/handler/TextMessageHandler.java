@@ -63,6 +63,7 @@ public class TextMessageHandler implements MessageHandler{
     }
 
     private void saveSession(TextMessage message){
+        log.info("message:{}",message);
         MessageSessionService messageSessionService = SpringContextUtil.getBean(MessageSessionService.class);
         Session session = new Session();
         session.setSessionTime(new Date());
@@ -71,8 +72,8 @@ public class TextMessageHandler implements MessageHandler{
         session.setSendUserName(message.getSendUserName());
         session.setSendUserAvatar(message.getSendAvatar());
         session.setTargetId(Integer.parseInt(message.getTargetId()));
-        session.setTargetName(session.getTargetName());
-        session.setTargetAvatar(session.getTargetAvatar());
+        session.setTargetName(message.getTargetName());
+        session.setTargetAvatar(message.getTargetAvatar());
         session.setChatType(message.getType());
         messageSessionService.addOrUpdate(session);
     }

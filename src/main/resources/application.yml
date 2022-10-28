@@ -4,16 +4,23 @@ netty:
   port: 9000
 spring:
   redis:
-    host: localhost
+    host: redis
     database: 1
     port: 6379
     password: 123456
   data:
     mongodb:
-      host: localhost
+      host: mongo
       database: im
+      port: 49153
+      username: root
+      password: '123456'
+      authentication-database: admin
   main:
     web-application-type: none
 message:
   host: message
   port: 8080
+redisson:
+  singleServerConfig:
+    address: redis:6379
