@@ -37,6 +37,7 @@ public class TextMessageHandler implements MessageHandler{
         message.setDict(SEND.getCode());
         TextWebSocketFrame toMe = new TextWebSocketFrame(JsonUtil.writeObject(message));
         if (Objects.equals(CoreEnum.MessageCat.USER_MES.getCode(),message.getCat())){
+            log.info("增加未读消息");
             SpringContextUtil.getBean(UnReadMesService.class).undoMesCountUpdate(message.getTargetId(), message.getSendUserId());
         }else if (Objects.equals(CoreEnum.MessageCat.MES_ACK.getCode(),message.getCat())){
             SpringContextUtil.getBean(UnReadMesService.class).cleanUndoMsgCount(message.getTargetId(), message.getSendUserId());

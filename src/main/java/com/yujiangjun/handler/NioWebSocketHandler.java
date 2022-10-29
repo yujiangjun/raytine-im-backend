@@ -1,10 +1,8 @@
 package com.yujiangjun.handler;
 
-import cn.hutool.core.text.CharSequenceUtil;
 import cn.hutool.json.JSONUtil;
 import com.yujiangjun.constants.CoreEnum;
 import com.yujiangjun.message.TextMessage;
-import com.yujiangjun.util.JwtUtil;
 import com.yujiangjun.util.UrlUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -19,8 +17,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.nio.charset.StandardCharsets;
 
-import static com.yujiangjun.constants.Constant.JWT_PASSWORD;
-import static com.yujiangjun.constants.Constant.TOKEN;
 import static io.netty.handler.codec.http.HttpUtil.isKeepAlive;
 
 @Slf4j

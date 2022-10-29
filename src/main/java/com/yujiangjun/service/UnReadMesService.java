@@ -16,10 +16,12 @@ import java.util.concurrent.TimeUnit;
 public class UnReadMesService {
 
     public void undoMesCountUpdate(@NonNull String userId,@NonNull String targetId){
+        log.info("加锁");
         DistributedRedisLock.acquire(Constant.unReadMsgCount+userId);
         RedisTemplate redisTemplate = SpringContextUtil.getBean(StringRedisTemplate.class);
         redisTemplate.boundValueOps(Constant.unReadMsgCount+userId+"_"+targetId).increment();
         DistributedRedisLock.release(Constant.unReadMsgCount+userId);
+        log.info("释放锁");
     }
 
     public void cleanUndoMsgCount(@NonNull String userId,@NonNull String targetId){
