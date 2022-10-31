@@ -81,6 +81,16 @@
             <appender-ref ref="RollingFileWarn"/>
             <appender-ref ref="RollingFileError"/>
         </logger>
+        <logger name="com.mongodb" level="INFO">
+            <appender-ref ref="RollingFileInfo"/>
+            <appender-ref ref="RollingFileWarn"/>
+            <appender-ref ref="RollingFileError"/>
+        </logger>
+        <logger name="io.netty" level="INFO">
+            <appender-ref ref="RollingFileInfo"/>
+            <appender-ref ref="RollingFileWarn"/>
+            <appender-ref ref="RollingFileError"/>
+        </logger>
         <logger name="com.zaxxer.hikari.pool" level="ERROR">
             <appender-ref ref="RollingFileError"/>
         </logger>
